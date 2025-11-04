@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Device Registration Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="screen" id="login-screen">
+        <div class="card auth-card">
+            <div class="logo">
+                <span class="material-icons">devices</span>
+                <h2>DeviceHub Portal</h2>
+            </div>
+            <form id="login-form">
+                <div class="input-group">
+                    <label>Phone/Email</label>
+                    <input type="text" id="login-identifier" placeholder="Enter phone or email" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Login</button>
+                <div class="divider">or</div>
+                <button type="button" id="otp-login-btn" class="btn-outline">Login with OTP</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- OTP Screen -->
+    <div class="screen hidden" id="otp-screen">
+        <div class="card auth-card">
+            <div class="logo">
+                <span class="material-icons">sms</span>
+                <h2>OTP Verification</h2>
+                <p>Enter code sent to <span id="otp-phone">+1234567890</span></p>
+            </div>
+            <div class="otp-inputs">
+                <input type="text" maxlength="1" class="otp-digit">
+                <input type="text" maxlength="1" class="otp-digit">
+                <input type="text" maxlength="1" class="otp-digit">
+                <input type="text" maxlength="1" class="otp-digit">
+                <input type="text" maxlength="1" class="otp-digit">
+                <input type="text" maxlength="1" class="otp-digit">
+            </div>
+            <div class="resend-otp">
+                <button id="resend-otp-btn">Resend OTP (60s)</button>
+            </div>
+            <button id="verify-otp-btn" class="btn-primary">Verify</button>
+        </div>
+    </div>
+
+    <!-- Main Dashboard (Registration) -->
+    <div class="screen hidden" id="dashboard">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="logo">
+                <span class="material-icons">devices</span>
+                <h1>DeviceHub</h1>
+            </div>
+            <div class="user-actions">
+                <button id="emergency-btn" class="emergency-btn" title="Emergency Contact">
+                    <span class="material-icons">report</span>
+                </button>
+                <button id="chat-btn" class="chat-btn" title="Live Chat">
+                    <span class="material-icons">chat</span>
+                    <span class="chat-badge">3</span>
+                </button>
+                <div class="user-profile">
+                    <span id="user-name">User</span>
+                    <button id="logout-btn">
+                        <span class="material-icons">logout</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="dashboard-container">
+            <div class="sidebar">
+                <button class="nav-btn active" data-tab="register">
+                    <span class="material-icons">add_circle</span> Register Device
+                </button>
+                <button class="nav-btn" data-tab="devices">
+                    <span class="material-icons">inventory</span> My Devices
+                </button>
+                <button class="nav-btn" data-tab="contacts">
+                    <span class="material-icons">contacts</span> Contacts
+                </button>
+            </div>
+
+            <div class="main-content">
+                <!-- Registration Form -->
+                <div class="tab-content active" id="register-tab">
+                    <h2>Register New Device</h2>
+                    <form id="registration-form">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>IMEI/Serial *</label>
+                                <input type="text" id="device-imei" placeholder="15-digit IMEI or serial" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Device Type *</label>
+                                <select id="device-type" required>
+                                    <option value="">Select type</option>
+                                    <option value="smartphone">Smartphone</option>
+                                    <option value="tablet">Tablet</option>
+                                    <option value="laptop">Laptop</option>
+                                    <option value="iot">IoT Device</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Brand *</label>
+                                <input type="text" id="device-brand" placeholder="e.g., Samsung, Apple" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Model *</label>
+                                <input type="text" id="device-model" placeholder="e.g., Galaxy S23" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>OS Version</label>
+                                <input type="text" id="os-version" placeholder="e.g., Android 13">
+                            </div>
+                            <div class="input-group">
+                                <label>Mobile Number *</label>
+                                <input type="tel" id="mobile-number" placeholder="+1234567890" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Primary Email *</label>
+                                <input type="email" id="primary-email" placeholder="email@example.com" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Emergency Contact</label>
+                                <input type="tel" id="emergency-contact" placeholder="Emergency number">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Device Purpose</label>
+                                <select id="device-purpose">
+                                    <option value="personal">Personal</option>
+                                    <option value="business">Business</option>
+                                    <option value="medical">Medical</option>
+                                    <option value="education">Education</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Location</label>
+                                <input type="text" id="device-location" placeholder="City, Country">
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="submit" class="btn-primary">Register Device</button>
+                            <button type="button" id="send-email-btn" class="btn-secondary">
+                                <span class="material-icons">mail</span> Send Email Confirmation
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Devices List -->
+                <div class="tab-content" id="devices-tab">
+                    <h2>My Registered Devices</h2>
+                    <div id="devices-list">
+                        <!-- Devices will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Contacts -->
+                <div class="tab-content" id="contacts-tab">
+                    <h2>Emergency Contacts</h2>
+                    <div class="contact-list">
+                        <div class="contact-item emergency">
+                            <span class="material-icons">report</span>
+                            <div>
+                                <h3>Police</h3>
+                                <p>+1-911</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="material-icons">local_hospital</span>
+                            <div>
+                                <h3>Ambulance</h3>
+                                <p>+1-911</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="material-icons">fire_extinguisher</span>
+                            <div>
+                                <h3>Fire Department</h3>
+                                <p>+1-911</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="material-icons">support_agent</span>
+                            <div>
+                                <h3>IT Support</h3>
+                                <p>+1-800-123-4567</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Chat Widget -->
+    <div class="chat-widget hidden" id="chat-widget">
+        <div class="chat-header">
+            <span class="material-icons">chat</span>
+            <h3>Live Support</h3>
+            <button id="close-chat"><span class="material-icons">close</span></button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="message received">Hello! How can I help you today?</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="Type your message...">
+            <button id="send-chat"><span class="material-icons">send</span></button>
+        </div>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div class="modal hidden" id="emergency-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="material-icons emergency-icon">report</span>
+                <h2>Emergency Services</h2>
+            </div>
+            <div class="emergency-options">
+                <button class="emergency-option police">
+                    <span class="material-icons">security</span>
+                    Police (911)
+                </button>
+                <button class="emergency-option ambulance">
+                    <span class="material-icons">local_hospital</span>
+                    Ambulance (911)
+                </button>
+                <button class="emergency-option fire">
+                    <span class="material-icons">local_fire_department</span>
+                    Fire Department (911)
+                </button>
+                <button class="emergency-option it-support">
+                    <span class="material-icons">support_agent</span>
+                    IT Support (800-123-4567)
+                </button>
+            </div>
+            <button class="btn-secondary" id="close-emergency">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
